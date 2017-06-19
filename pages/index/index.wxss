@@ -1,21 +1,38 @@
 /**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.coupon_list {
+  width: 100%;
+  height: auto;
+  margin-top: 24rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
+.coupon {
+  display: flex; 
+  width: 100%;
+  height: 216rpx;
+  background: #fff;
+}
+
+.img {
+  margin: 32rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
+  border: 1rpx #ebecf1 solid;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.hd {
+  flex: 1;
 }
 
-.usermotto {
-  margin-top: 200px;
+.name {
+  display: block;
+  font-size: 14px;
+  color: #83889a;
+}
+
+.price {
+  font-size: 20px;
+  color: #28354c;
 }
