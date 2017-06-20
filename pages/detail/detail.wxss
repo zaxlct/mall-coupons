@@ -1,19 +1,36 @@
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
+@import '../../common/coupon/index.wxss';
+.coupon {
+  margin-top: 20rpx;
 }
 
-.textStyle {
+.footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100rpx;
+  line-height: 100rpx;
+  width: 100%;
 }
 
-.textContainer {
-  margin-top: 200px;
+.footer_left {
+  padding-left: 24rpx;
+  width: 64%;
+  height: inherit;
+  background: #fff;
+  color: #e3007e;
+  font-size: 28rpx;
+}  
+
+.price_footer {
+  font-size: 40rpx !important;
+}
+  
+.footer_right {
+  width: 36%;
+  height: inherit;
+  background: #e3007e;
+  font-size: 32rpx;
+  color: #fff;
+  text-align: center;
 }

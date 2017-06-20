@@ -8,3 +8,6 @@ page {
 .bg-white {
   background: #fff;
 }
+
+.pink { color: #e3007e !important; }
+.gray { color: #83889a !important; }

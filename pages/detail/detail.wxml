@@ -1,5 +1,17 @@
-<view class="container">
-  <view class="textContainer">
-    <text class="textStyle">{{text}}</text>
+<view class="coupon_list">
+  <import src="../../common/coupon/index.wxml" />
+  <template is="coupon" class="coupon" />
+
+  <view class="footer">
+    <view class="footer_left">
+      <text>￥</text>
+      <text class="price_footer">88</text>
+      <text>.00</text>
+      <text class="gray">（88代100元）</text>
+    </view>
+
+    <navigator class="footer_right">
+      <text>再来一张</text>
+    </navigator>
   </view>
 </view>
