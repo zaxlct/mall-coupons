@@ -1,5 +1,5 @@
 <template name="coupon">
-  <navigator class="coupon {{isUsed ? 'used' : 'bg-white'}}">
+  <navigator class="coupon {{isUsed ? 'used' : 'bg-white'}}" url="../detail/detail?id=1a212" open-type="navigateTo">
     <image class="img" src="http://placehold.it/120x120" mode="aspectFill"></image>
     <view class="hd">
       <text class="name">静态无二</text>
