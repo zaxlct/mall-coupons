@@ -1,0 +1,10 @@
+<template name="coupon">
+  <navigator class="coupon {{isUsed ? 'used' : 'bg-white'}}">
+    <image class="img" src="http://placehold.it/120x120" mode="aspectFill"></image>
+    <view class="hd">
+      <text class="name">静态无二</text>
+      <text class="price">100 元代金券</text>
+      <text class="desc">88 元代 100 元</text>
+    </view>
+  </navigator>
+</template>

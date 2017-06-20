@@ -2,4 +2,9 @@ page {
   min-height: 100%;
   box-sizing: border-box;
   background: #f5f6f6;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+.bg-white {
+  background: #fff;
 }

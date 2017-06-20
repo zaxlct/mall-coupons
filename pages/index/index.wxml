@@ -1,10 +1,8 @@
 <!--index.wxml-->
 <view class="coupon_list">
-  <navigator class="coupon">
-    <image class="img" src="http://placehold.it/120x120" mode="aspectFill"></image>
-    <view class="hd">
-      <text class="name">静态无二</text>
-      <text class="price">静态无二</text>
-    </view>
-  </navigator>
+  <import src="../../common/coupon/index.wxml" />
+  <template is="coupon" />
+  <template is="coupon" data="{{isUsed: true}}" />
+  <template is="coupon" />
+  <template is="coupon" data="{{isUsed: true}}" />
 </view>

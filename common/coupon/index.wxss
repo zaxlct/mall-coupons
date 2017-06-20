@@ -1,0 +1,47 @@
+.coupon {
+  margin-bottom: 20rpx;
+  display: flex; 
+  width: 100%;
+  height: 216rpx;
+}
+
+.used {
+  background-image: url('https://ws1.sinaimg.cn/large/006tNc79ly1fgrg1hzxv9j30ji060t8i.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.img {
+  margin: 32rpx;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  border: 1rpx #ebecf1 solid;
+}
+
+.hd {
+  flex: 1;
+}
+
+.name {
+  margin-top: 24rpx;
+  display: block;
+  font-size: 28rpx;
+  color: #83889a;
+}
+
+.price {
+  padding: 12rpx 0;
+  display: block;
+  font-size: 40rpx;
+  color: #28354c;
+  border-bottom: 1px #ebecf1 dashed;
+}
+
+.desc {
+  margin-top: 10rpx;
+  display: block;
+  font-size: 28rpx;
+  color: #83889a;
+}

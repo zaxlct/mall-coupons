@@ -1,38 +1,10 @@
 /**index.wxss**/
+@import '../../common/coupon/index.wxss';
+
 .coupon_list {
   width: 100%;
   height: auto;
-  margin-top: 24rpx;
+  margin-top: 20rpx;
   padding: 0 24rpx;
   box-sizing: border-box;
-}
-
-.coupon {
-  display: flex; 
-  width: 100%;
-  height: 216rpx;
-  background: #fff;
-}
-
-.img {
-  margin: 32rpx;
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 50%;
-  border: 1rpx #ebecf1 solid;
-}
-
-.hd {
-  flex: 1;
-}
-
-.name {
-  display: block;
-  font-size: 14px;
-  color: #83889a;
-}
-
-.price {
-  font-size: 20px;
-  color: #28354c;
 }
