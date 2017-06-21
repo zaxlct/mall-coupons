@@ -11,3 +11,18 @@ page {
 
 .pink { color: #e3007e !important; }
 .gray { color: #83889a !important; }
+
+.tr { text-align: right !important; }
+.tc { text-align: center !important; }
+
+.button {
+  display: block;
+  margin: 0 24rpx;
+  box-sizing: border-box;
+  border-radius: 24px;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #e3007e;
+  color: #fff;
+  font-size: 32rpx;
+}

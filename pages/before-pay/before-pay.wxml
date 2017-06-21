@@ -1,5 +1,37 @@
 <view class="container">
-  <view class="textContainer">
-    <text class="textStyle">{{text}}</text>
+  <view class="cell_box">
+    <view class="cell_bd">将太无二80代100元</view>
+    <view class="cell_ft">80元</view>
   </view>
+
+  <view class="cell_box">
+    <view class="cell_bd">数量</view>
+    <view class="cell_ft">
+      <view class="computed_btn">-</view>
+      <text class="num">1</text>
+      <view class="computed_btn">+</view>
+    </view>
+  </view>
+
+  <view class="cell_box">
+    <view class="cell_bd">小计</view>
+    <view class="cell_ft">￥ 80</view>
+  </view>
+
+  <view class="cell_box cell_phone">
+    <view class="cell_bd_phone">手机号</view>
+    <view class="cell_ft_input">
+      <input placeholder="请输入手机号" placeholder-style="color: #c4c5ce" type="number"	/>
+    </view>
+  </view>
+
+  <view class="cell_box cell_code">
+    <view class="cell_bd_phone">验证码</view>
+    <view class="cell_ft_input_code">
+      <input placeholder="请输入验证码" placeholder-style="color: #c4c5ce" type="number"	/>
+    </view>
+    <view class="send_code pink">发送</view>
+  </view>
+
+  <button class="button">微信支付</button>
 </view>
