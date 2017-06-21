@@ -10,7 +10,7 @@
       <text class="gray">（88代100元）</text>
     </view>
 
-    <navigator class="footer_right" url="../before-pay/before-pay" open-type="navigateTo">
+    <navigator class="footer_right" url="../after-pay/after-pay" open-type="navigateTo">
       <text>再来一张</text>
     </navigator>
   </view>

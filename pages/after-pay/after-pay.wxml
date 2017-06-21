@@ -1,5 +1,44 @@
 <view class="container">
-  <view class="textContainer">
-    <text class="textStyle">{{text}}</text>
+  <view class="cell_box">
+    <view class="cell_bd">优惠券</view>
+    <view class="cell_ft">将太无二80代100元</view>
   </view>
+
+  <view class="cell_box">
+    <view class="cell_bd">数量</view>
+    <view class="cell_ft">1</view>
+  </view>
+
+  <view class="cell_box">
+    <view class="cell_bd">购买时间</view>
+    <view class="cell_ft">2017-10-01 10：00</view>
+  </view>
+
+  <view class="cell_box">
+    <view class="cell_bd">订单编号</view>
+    <view class="cell_ft">1212131412312121</view>
+  </view>
+
+  <view class="tips_box">
+    <text class="title">如何使用优惠券？</text>
+    <view class="tips">
+      <text class="ol">1.</text>
+      <text>微信扫一扫商家收银台的“逛街宝收款二维码”</text>
+    </view>
+    <view class="tips">
+      <text class="ol">2.</text>
+      <text>输入您本次的消费金额，如果您当前拥有该商家的可用优惠券，逛街宝将自动为您匹配</text>
+    </view>
+    <view class="tips">
+      <text class="ol">3.</text>
+      <text>选择您要使用的优惠券</text>
+    </view>
+    <view class="tips">
+      <text class="ol">4.</text>
+      <text>您只要支付只用用回去抵用之后的剩余金额即可</text>
+    </view>
+  </view>
+  
+
+  <button class="button">查看优惠券</button>
 </view>
