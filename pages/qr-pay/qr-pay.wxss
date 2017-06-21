@@ -1,0 +1,146 @@
+/*
+ * header ↓↓↓↓↓
+ */
+.header {
+  padding-bottom: 30rpx;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  font-size: 28rpx;
+}
+
+.media {
+  margin-bottom: 36rpx;
+  padding-top: 36rpx;
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+.media image {
+  width: 70rpx;
+  height: 70rpx;
+  display: inline-block;
+  border: 1rpx solid #EBECF1;
+  border-radius: 50%;
+}
+
+.media text {
+  margin-top: 10rpx;
+  display: block;
+  color: #28354C;
+}
+
+.ipt_box {
+  box-sizing: border-box;
+  padding: 0 24rpx;
+  width: 100%;
+  height: 80rpx;
+}
+
+.ipt_box input {
+  padding-left: 20rpx;
+  box-sizing: border-box;
+  width: 100%;
+  height: inherit;
+  background: #EBECF1;
+  border-radius: 4px;
+}
+/*
+ * header ↑↑↑↑
+ */
+
+.coupon_list {
+  padding: 30rpx 24rpx;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 28rpx;
+}
+
+.coupon_num {
+  font-size: 28rpx;
+  color: #A6A8B6;
+}
+
+.coupon {
+  margin-top: 20rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #fff;
+  color: #28354C;
+}
+
+.coupon image {
+  margin-right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  vertical-align: middle;
+  border: 1rpx solid #EBECF1;
+  border-radius: 50%;
+}
+
+.coupon_name {
+  margin-right: 20rpx;
+}
+
+.weui-check__label {
+  /*margin-top: 10rpx;*/
+  float: right;
+}
+
+.weui-check__hd_in-checkbox {
+  margin-top: 14rpx;
+  height: 50rpx;
+}
+
+.cell_box {
+  display: flex;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  width: 100%;
+  height: 100rpx;
+  box-sizing: border-box;
+  background: #fff;
+  line-height: 100rpx;
+  border-bottom: 1px #ebecf1 solid; 
+  overflow: hidden;
+}
+
+.cell_bd {
+  flex: 3;
+  height: inherit;
+  color: #28354C;
+}
+
+.cell_ft {
+  height: inherit;  
+  color: #E3007E;
+  text-align: right;
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.button {
+  margin-top: 100rpx;
+  margin-bottom: 40rpx;
+}
+
+
+
+/*!
+ * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
+ * Copyright 2017 Tencent, Inc.
+ * Licensed under the MIT license
+ */
+.weui-icon-radio{margin-left:3.2px;margin-right:3.2px}.weui-icon-checkbox_circle,.weui-icon-checkbox_success{margin-left:4.6px;margin-right:4.6px}.weui-check__label:active{background-color:#ececec}.weui-check{position:absolute;left:-9999px}.weui-check__hd_in-checkbox{padding-right:.35em}.weui-cell__ft_in-radio{padding-left:.35em}
+/*!
+ * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
+ * Copyright 2017 Tencent, Inc.
+ * Licensed under the MIT license
+ */
+.weui-cell_input{padding-top:0;padding-bottom:0}.weui-label{width:105px;word-wrap:break-word;word-break:break-all}.weui-input{height:2.58823529em;min-height:2.58823529em;line-height:2.58823529em}.weui-toptips{position:fixed;-webkit-transform:translateZ(0);transform:translateZ(0);top:0;left:0;right:0;padding:5px;font-size:14px;text-align:center;color:#fff;z-index:5000;word-wrap:break-word;word-break:break-all}.weui-toptips_warn{background-color:#e64340}.weui-textarea{display:block;width:100%}.weui-textarea-counter{color:#b2b2b2;text-align:right}.weui-cell_warn,.weui-textarea-counter_warn{color:#e64340}.weui-form-preview{position:relative;background-color:#fff}.weui-form-preview:before{top:0;border-top:1rpx solid #d9d9d9}.weui-form-preview:after,.weui-form-preview:before{content:" ";position:absolute;left:0;right:0;height:1px;color:#d9d9d9}.weui-form-preview:after{bottom:0;border-bottom:1rpx solid #d9d9d9}.weui-form-preview__value{font-size:14px}.weui-form-preview__value_in-hd{font-size:26px}.weui-form-preview__hd{position:relative;padding:10px 15px;text-align:right;line-height:2.5em}.weui-form-preview__hd:after{content:" ";position:absolute;left:0;bottom:0;right:0;height:1px;border-bottom:1rpx solid #d9d9d9;color:#d9d9d9;left:15px}.weui-form-preview__bd{padding:10px 15px;font-size:.9em;text-align:right;color:#999;line-height:2}.weui-form-preview__ft{position:relative;line-height:50px;display:-webkit-box;display:-webkit-flex;display:flex}.weui-form-preview__ft:after{content:" ";position:absolute;left:0;top:0;right:0;height:1px;border-top:1rpx solid #d5d5d6;color:#d5d5d6}.weui-form-preview__item{overflow:hidden}.weui-form-preview__label{float:left;margin-right:1em;min-width:4em;color:#999;text-align:justify;text-align-last:justify}.weui-form-preview__value{display:block;overflow:hidden;word-break:normal;word-wrap:break-word}.weui-form-preview__btn{position:relative;display:block;-webkit-box-flex:1;-webkit-flex:1;flex:1;color:#3cc51f;text-align:center}.weui-form-preview__btn:after{content:" ";position:absolute;left:0;top:0;width:1px;bottom:0;border-left:1rpx solid #d5d5d6;color:#d5d5d6}.weui-form-preview__btn:first-child:after{display:none}.weui-form-preview__btn_active{background-color:#eee}.weui-form-preview__btn_default{color:#999}.weui-form-preview__btn_primary{color:#0bb20c}.weui-cell_select{padding:0}.weui-select{position:relative;padding-left:15px;padding-right:30px;height:2.58823529em;min-height:2.58823529em;line-height:2.58823529em;border-right:1rpx solid #d9d9d9}.weui-select:before{content:" ";display:inline-block;height:6px;width:6px;border-width:2px 2px 0 0;border-color:#c8c8cd;border-style:solid;-webkit-transform:matrix(.71,.71,-.71,.71,0,0);transform:matrix(.71,.71,-.71,.71,0,0);position:relative;top:-2px;position:absolute;top:50%;right:15px;margin-top:-4px}.weui-select_in-select-after{padding-left:0}.weui-cell__bd_in-select-before,.weui-cell__hd_in-select-after{padding-left:15px}.weui-cell_vcode{padding-right:0}.weui-vcode-btn,.weui-vcode-img{margin-left:5px;height:2.58823529em;vertical-align:middle}.weui-vcode-btn{display:inline-block;padding:0 .6em 0 .7em;border-left:1px solid #e5e5e5;line-height:2.58823529em;font-size:17px;color:#3cc51f;white-space:nowrap}.weui-vcode-btn:active{color:#52a341}
