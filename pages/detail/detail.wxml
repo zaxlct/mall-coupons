@@ -2,6 +2,9 @@
   <import src="../../common/coupon/index.wxml" />
   <template is="coupon" class="coupon" />
 
+  <import src="../../common/wxParse/wxParse.wxml"/>
+  <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+
   <view class="footer">
     <view class="footer_left">
       <text>￥</text>
