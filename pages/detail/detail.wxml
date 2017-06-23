@@ -1,4 +1,4 @@
-<view class="coupon_list">
+<view class="coupon_detail">
   <import src="../../common/coupon/index.wxml" />
   <template is="coupon" class="coupon" />
 

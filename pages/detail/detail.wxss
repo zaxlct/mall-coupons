@@ -1,5 +1,9 @@
 @import '../../common/coupon/index.wxss';
 @import '../../common/wxParse/wxParse.wxss';
+.coupon_detail {
+  margin-bottom: 100rpx;
+}
+
 .coupon {
   margin-top: 20rpx;
 }
