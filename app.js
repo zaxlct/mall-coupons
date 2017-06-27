@@ -1,30 +1,50 @@
 //app.js
 App({
   onLaunch: function () {
-    //调用API从本地缓存中获取数据
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    const self = this
+    wx.checkSession({
+      success() {
+        console.log('检测已登录！')
+      },
+      fail() {
+        self.wxLogin()
+      }
+    })
   },
-  getUserInfo:function(cb){
-    var that = this
-    if(this.globalData.userInfo){
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    }else{
-      //调用登录接口
-      wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
+
+  /* TODO
+   * 1. 新的微信号测试
+   * 2. Token 过期，code 未过期的情况
+   */
+  wxLogin(cb) {
+    const self = this
+    wx.login({
+      success(res) {
+        if (res.code) {
+          // 发起网络请求
+          wx.request({
+            url: 'https://gjb.demo.chilunyc.com/api/weapp/users/login',
+            method: 'POST',
+            data: {
+              code: res.code
+            },
+            success(res) {
+              wx.setStorage({
+                key: "token",
+                data: res.data.data.token,
+                success() {
+                  typeof cb == "function" && cb(res.data.data.token)
+                }
+              })
+            },
+            fail() {
+              wx.showToas({title: '网络错误，请重新授权！'})
+            },
           })
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
         }
-      })
-    }
+      }
+    })
   },
-  globalData:{
-    userInfo:null
-  }
 })

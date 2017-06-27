@@ -1,26 +1,49 @@
 //index.js
 //获取应用实例
-var app = getApp()
+const app = getApp()
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {}
+    coupons: [],
+  },
+  onLoad() {
+    const self = this
+    wx.getStorage({
+      key: 'token',
+      success(res) {
+        self.fetchData(res.data)
+      } 
+    })
+  },
+  fetchData(token) {
+    const self = this
+    wx.request({
+      url: 'https://gjb.demo.chilunyc.com/api/weapp/coupons', //仅为示例，并非真实的接口地址
+      header: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json'
+      },
+      success(res) {
+        const { data } = res
+        console.log(data)
+        if(data.data) {
+          self.setData({
+            coupons: res.data.data
+          })
+        } else if(data.errors) {
+          if(data.errors.status == 401) {
+            app.wxLogin(self.fetchData)
+          }
+        }
+      },
+      fail() {
+        wx.showToas({title: '网络错误，请重试！'})
+      },
+    })
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
-    console.log('onLoad')
-    var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
-  }
 })
