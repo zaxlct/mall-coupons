@@ -17,7 +17,7 @@ Page({
   fetchData(token) {
     const self = this
     wx.request({
-      url: 'https://gjb.demo.chilunyc.com/api/weapp/coupons', //仅为示例，并非真实的接口地址
+      url: 'https://gjb.demo.chilunyc.com/api/weapp/coupons',
       header: {
         'Authorization': 'Bearer ' + token,
         'Accept': 'application/json'

@@ -6,7 +6,7 @@
 }
 
 .used {
-  background-image: url('https://ws1.sinaimg.cn/large/006tNc79ly1fgrg1hzxv9j30ji060t8i.jpg');
+  background-image: url('https://gjb.demo.chilunyc.com/upload/weapp/coupon_used.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

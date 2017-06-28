@@ -1,8 +1,4 @@
-<!--index.wxml-->
 <view class="coupon_list">
   <import src="../../common/coupon/index.wxml" />
-  <template is="coupon" />
-  <template is="coupon" data="{{isUsed: true}}" />
-  <template is="coupon" />
-  <template is="coupon" data="{{isUsed: true}}" />
+  <template is="coupon" wx:key="{{item.coupon_id}}" data="{{item}}" wx:for="{{coupons}}" />
 </view>

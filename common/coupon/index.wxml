@@ -1,10 +1,14 @@
 <template name="coupon">
-  <navigator class="coupon {{isUsed ? 'used' : 'bg-white'}}" url="../detail/detail?id=1a212" open-type="navigateTo">
-    <image class="img" src="http://placehold.it/120x120" mode="aspectFill"></image>
+  <navigator 
+    class="coupon {{item.status ? 'used' : 'bg-white'}}" 
+    url="../detail/detail?coupon_id={{item.id}}&order_id={{item.order_id}}" 
+    open-type="navigateTo"
+  >
+    <image class="img" src="{{item.logo}}" mode="aspectFill"></image>
     <view class="hd">
-      <text class="name">静态无二</text>
-      <text class="price">100 元代金券</text>
-      <text class="desc">88 元代 100 元</text>
+      <text class="name">{{item.merchant_name}}</text>
+      <text class="price">{{item.coupon_name}}</text>
+      <text class="desc">{{item.price}} 元代 {{item.face_value}} 元</text>
     </view>
   </navigator>
 </template>
