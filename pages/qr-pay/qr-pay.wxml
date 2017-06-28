@@ -1,56 +1,32 @@
 <view class="container">
   <view class="header">
     <view class="media">
-      <image class="shop_img" src="http://placehold.it/120x120" mode="aspectFill"></image>
-      <text class="shop_name">肯德基麦当劳</text>
+      <image class="shop_img" src="{{merchant_info.logo}}" mode="aspectFill"></image>
+      <text class="shop_name">{{merchant_info.name}}</text>
     </view>
 
     <view class="ipt_box">
-      <input placeholder-style="color: #c4c5ce" placeholder="请输入消费金额" type="number" />
+      <input placeholder-style="color: #c4c5ce" bindinput="bindExpenditure" placeholder="请输入消费金额" type="number" />
     </view>
   </view>
 
-  <view class="coupon_list">
-    <text class="coupon_num">您有 3 张可用优惠券</text>
-    <view class="coupon">
-      <image class="shop_img" src="http://placehold.it/120x120" mode="aspectFill"></image>
-      <text class="coupon_name">汉拿山99代100元</text>
-      <text class="pink">-100</text>
+  <checkbox-group bindchange="checkboxChange" class="coupon_list">
+    <text class="coupon_num">您有 {{result.coupons.length}} 张可用优惠券</text>
+
+    <view class="coupon" wx:for="{{coupons}}" wx:key>
+      <image class="shop_img" src="{{merchant_info.logo}}" mode="aspectFill"></image>
+      <text class="coupon_name">{{item.name}}</text>
+      <text class="pink">-{{item.face_value}}</text>
       <label class="weui-cell weui-check__label" wx:key="value">
-        <checkbox class="weui-check" value="{{item.value}}" checked="true"/>
+        <checkbox class="weui-check" value="{{index}}" checked="{{item.isSeleted}}"/>
         <view class="weui-cell__hd weui-check__hd_in-checkbox">
-          <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{false}}"></icon>
-          <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{true}}"></icon>
+          <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.isSeleted}}"></icon>
+          <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.isSeleted}}"></icon>
         </view>
       </label>
     </view>
 
-    <view class="coupon">
-      <image class="shop_img" src="http://placehold.it/120x120" mode="aspectFill"></image>
-      <text class="coupon_name">汉拿山99代100元</text>
-      <text class="pink">-100</text>
-      <label class="weui-cell weui-check__label" wx:key="value">
-        <checkbox class="weui-check" value="{{item.value}}" checked="true"/>
-        <view class="weui-cell__hd weui-check__hd_in-checkbox">
-          <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{false}}"></icon>
-          <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{true}}"></icon>
-        </view>
-      </label>
-    </view>
-
-    <view class="coupon">
-      <image class="shop_img" src="http://placehold.it/120x120" mode="aspectFill"></image>
-      <text class="coupon_name">汉拿山99代100元</text>
-      <text class="pink">-100</text>
-      <label class="weui-cell weui-check__label" wx:key="value">
-        <checkbox class="weui-check" value="{{item.value}}" checked="true"/>
-        <view class="weui-cell__hd weui-check__hd_in-checkbox">
-          <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{false}}"></icon>
-          <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{true}}"></icon>
-        </view>
-      </label>
-    </view>
-  </view>
+  </checkbox-group>
 
   <view class="cell_box">
     <view class="cell_bd">优惠券抵用：</view>
