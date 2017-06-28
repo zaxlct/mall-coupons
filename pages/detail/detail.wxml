@@ -13,7 +13,7 @@
       <text class="gray">（{{item.price}} 元代 {{item.face_value}} 元）</text>
     </view>
 
-    <navigator wx:if="{{item.status == ''}}" class="footer_right" url="../before-pay/before-pay?name={{item.merchant_name}}&price={{item.price}}" open-type="navigateTo">
+    <navigator wx:if="{{item.status == ''}}" class="footer_right" url="../before-pay/before-pay?name={{item.merchant_name}}&price={{item.price}}&id={{item.id}}" open-type="navigateTo">
       <text>购买</text>
     </navigator>
     <view  wx:elif="{{item.status == 0}}" class="footer_right">

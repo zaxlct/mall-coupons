@@ -3,6 +3,7 @@ let timer = null
 
 Page({
   data:{
+    id: '',
     name: '',
     price: 0,
     num: 1,
@@ -14,7 +15,7 @@ Page({
     timeOut: 60,
   },
   onLoad(options){
-    const { name = '', price = 0 } = options
+    const { name = '', price = 0, id='' } = options
     const self = this
     this.setData({
       name,
@@ -165,6 +166,7 @@ Page({
   },
 
   submitPay() {
+    const self = this
     if(!this.data.phone) {
       wx.showModal({
         title: '请输入手机号！',
@@ -182,6 +184,97 @@ Page({
       })
       return 
     }
+
+    wx.getStorage({
+      key: 'token',
+      success(res) {
+        self.sendUserInfo(res.data)
+        // self.wxPay(res.data)
+      } 
+    })
+  },
+
+  sendUserInfo(token) {
+    const self = this
+    wx.request({
+      url: 'https://gjb.demo.chilunyc.com/api/weapp/users',
+      header: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json'
+      },
+      data: {
+        nickname: self.data.nickname,
+        phone: self.data.phone,
+        code: self.data.code,
+      },
+      method: 'POST',
+      success(res) {
+        const { data } = res
+        console.log(data)
+        if(data.data) {
+          if(data.data.status != 1) {
+            console.error('用户信息提交失败！')
+          }
+        } else if(data.errors) {
+          if(data.errors.status == 401) {
+            app.wxLogin(self.fetchData)
+          }
+        }
+      },
+      fail() {
+        wx.showToas({title: '网络错误，请重试！'})
+      },
+    })
+  },
+
+  wxPay(token) {
+    const self = this
+    wx.request({
+      url: 'https://gjb.demo.chilunyc.com/api/weapp/orders',
+      header: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json'
+      },
+      data: {
+        id: self.data.id,
+        num: self.data.num,
+      },
+      method: 'POST',
+      success(res) {
+        const { data } = res
+        console.log(data)
+        if(data.data) {
+          const {
+            appid,
+            timestamp,
+            nonce_str,
+            pack_age,
+            sign_type,
+            pay_sign
+          } = data.data
+
+          wx.requestPayment({
+            timeStamp: timestamp,
+            nonceStr: nonce_str,
+            package: pack_age,
+            signType: MD5,
+            paySign: pay_sign,
+            success(res){
+              console.log(res)
+            },
+            fail(res){
+            }
+          })
+        } else if(data.errors) {
+          if(data.errors.status == 401) {
+            app.wxLogin(self.fetchData)
+          }
+        }
+      },
+      fail() {
+        wx.showToas({title: '网络错误，请重试！'})
+      },
+    })
   },
 
   onUnload(){
