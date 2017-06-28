@@ -39,3 +39,12 @@
   color: #fff;
   text-align: center;
 }
+
+.used {
+  width: 36%;
+  height: inherit;
+  background: #c4c5ce;
+  font-size: 32rpx;
+  color: #fff;
+  text-align: center;
+}

@@ -1,7 +1,7 @@
 <template name="coupon">
   <navigator 
     class="coupon {{item.status ? 'used' : 'bg-white'}}" 
-    url="../detail/detail?coupon_id={{item.id}}&order_id={{item.order_id}}" 
+    url="../detail/detail?id={{item.id}}&order_id={{item.order_id}}" 
     open-type="navigateTo"
   >
     <image class="img" src="{{item.logo}}" mode="aspectFill"></image>

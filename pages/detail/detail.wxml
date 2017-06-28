@@ -1,6 +1,6 @@
 <view class="coupon_detail">
   <import src="../../common/coupon/index.wxml" />
-  <template is="coupon" class="coupon" />
+  <template is="coupon" data="{{item}}" class="coupon" />
 
   <import src="../../common/wxParse/wxParse.wxml"/>
   <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
@@ -8,13 +8,19 @@
   <view class="footer">
     <view class="footer_left">
       <text>￥</text>
-      <text class="price_footer">88</text>
+      <text class="price_footer">{{item.price}}</text>
       <text>.00</text>
-      <text class="gray">（88代100元）</text>
+      <text class="gray">（{{item.price}} 元代 {{item.face_value}} 元）</text>
     </view>
 
-    <navigator class="footer_right" url="../after-pay/after-pay" open-type="navigateTo">
-      <text>再来一张</text>
+    <navigator wx:if="{{item.status == ''}}" class="footer_right" url="../before-pay/before-pay?name={{item.merchant_name}}&price={{item.price}}" open-type="navigateTo">
+      <text>购买</text>
     </navigator>
+    <view  wx:elif="{{item.status == 0}}" class="footer_right">
+      <text>待消费</text>
+    </view>
+    <view  wx:else="{{item.status == 1}}" class="used">
+      <text>已使用</text>
+    </view>
   </view>
 </view>
