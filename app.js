@@ -38,7 +38,7 @@ App({
               })
             },
             fail() {
-              wx.showToas({title: '网络错误，请重新授权！'})
+              wx.showToast({title: '网络错误，请重新授权！'})
             },
           })
         } else {

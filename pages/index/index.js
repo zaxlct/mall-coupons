@@ -36,7 +36,7 @@ Page({
         }
       },
       fail() {
-        wx.showToas({title: '网络错误，请重试！'})
+        wx.showToast({title: '网络错误，请重试！'})
       },
     })
   },
