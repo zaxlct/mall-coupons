@@ -6,7 +6,7 @@
     </view>
 
     <view class="ipt_box">
-      <input placeholder-style="color: #c4c5ce" bindinput="bindExpenditure" placeholder="请输入消费金额" type="number" />
+      <input placeholder-style="color: #c4c5ce" bindinput="bindConsume" placeholder="请输入消费金额" type="number" />
     </view>
   </view>
 
@@ -30,13 +30,13 @@
 
   <view class="cell_box">
     <view class="cell_bd">优惠券抵用：</view>
-    <view class="cell_ft">-300</view>
+    <view class="cell_ft">-{{couponTotal}}</view>
   </view>
 
   <view class="cell_box">
     <view class="cell_bd">您还需支付：</view>
-    <view class="cell_ft">￥12.00</view>
+    <view class="cell_ft">￥{{pay_sum}}</view>
   </view>
 
-  <button class="button">微信支付</button>
+  <button class="button" bindtap="submitPay">微信支付</button>
 </view>
