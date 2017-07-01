@@ -2,6 +2,10 @@
 @import '../../common/wxParse/wxParse.wxss';
 .coupon_detail {
   margin-bottom: 100rpx;
+  padding:0 24rpx;
+  width:100%;
+  height:auto;
+  box-sizing:border-box;
 }
 
 .coupon {
