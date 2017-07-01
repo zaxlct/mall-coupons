@@ -6,7 +6,7 @@
     </view>
 
     <view class="ipt_box">
-      <input placeholder-style="color: #c4c5ce" bindinput="bindConsume" placeholder="请输入消费金额" type="number" />
+      <input placeholder-style="color: #c4c5ce" bindinput="bindConsume" placeholder="请输入消费金额" type="digit" />
     </view>
   </view>
 
