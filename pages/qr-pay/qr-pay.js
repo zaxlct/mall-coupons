@@ -56,8 +56,12 @@ Page({
   },
   bindConsume(e) {
     // TODO 用户改变输入的消费额度时，要判断消费额度是否大于当前已选择的优惠券总额
+    const consume = Number(e.detail.value.trim())
+    const couponTotal = this.data.coupons.reduce((total,prev) => total + prev.face_value * Number(prev.isSeleted), 0)
+    const pay_sum = consume - couponTotal < 0 ? 0 : consume - couponTotal
     this.setData({
-      consume: Number(e.detail.value.trim())
+      consume,
+      pay_sum,
     })
   },
   checkboxChange(e) {

@@ -11,7 +11,7 @@
   </view>
 
   <checkbox-group bindchange="checkboxChange" class="coupon_list">
-    <text class="coupon_num">您有 {{result.coupons.length}} 张可用优惠券</text>
+    <text class="coupon_num">您有 {{coupons.length}} 张可用优惠券</text>
 
     <view class="coupon" wx:for="{{coupons}}" wx:key>
       <image class="shop_img" src="{{merchant_info.logo}}" mode="aspectFill"></image>
