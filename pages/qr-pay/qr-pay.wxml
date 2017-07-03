@@ -13,6 +13,7 @@
   <checkbox-group bindchange="checkboxChange" class="coupon_list">
     <text class="coupon_num">您有 {{coupons.length}} 张可用优惠券</text>
 
+    <block wx:if="{{coupons.length}}">
     <view class="coupon" wx:for="{{coupons}}" wx:key>
       <image class="shop_img" src="{{merchant_info.logo}}" mode="aspectFill"></image>
       <text class="coupon_name">{{item.name}}</text>
@@ -25,12 +26,15 @@
         </view>
       </label>
     </view>
+    </block>  
+    <view wx:else>暂无优惠券可使用</view>
 
   </checkbox-group>
 
   <view class="cell_box">
     <view class="cell_bd">优惠券抵用：</view>
-    <view class="cell_ft">-{{couponTotal}}</view>
+    <view class="cell_ft" wx:if="{{couponTotal}}">-{{couponTotal}}</view>
+    <view class="cell_ft" wx:else>无</view>
   </view>
 
   <view class="cell_box">
