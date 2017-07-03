@@ -92,6 +92,15 @@ Page({
       })
       return 
     }
+    
+    if(this.data.phone.substring(0, 1) != 1 || this.data.phone.length !== 11) {
+      wx.showModal({
+        title: '手机号格式错误！',
+        content: '',
+        showCancel: false,
+      })
+      return 
+    }
 
     const self = this
     this.setData({
