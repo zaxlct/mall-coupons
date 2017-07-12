@@ -18,7 +18,10 @@ Page({
       key: 'token',
       success(res) {
         self.fetchData(res.data)
-      } 
+      },
+      fail() {
+        app.wxLogin(self.fetchData)
+      }
     })
   },
   fetchData(token) {
@@ -45,6 +48,7 @@ Page({
           })
         } else if(data.errors) {
           if(data.errors.status == 401) {
+            console.log('merchants', 401)
             app.wxLogin(self.fetchData)
           }
         }

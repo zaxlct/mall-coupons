@@ -19,7 +19,10 @@ Page({
       key: 'token',
       success(res) {
         self.fetchCouponDetail(res.data)
-      } 
+      },
+      fail() {
+        app.wxLogin(self.fetchCouponDetail)
+      }
     })
   },
   fetchCouponDetail(token) {
@@ -40,7 +43,8 @@ Page({
           })
         } else if(data.errors) {
           if(data.errors.status == 401) {
-            app.wxLogin(self.fetchData)
+            console.log('detail', 401)
+            app.wxLogin(self.fetchCouponDetail)
           }
         }
       },

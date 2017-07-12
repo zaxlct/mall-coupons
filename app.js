@@ -1,6 +1,6 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch() {
     const self = this
     wx.checkSession({
       success() {
@@ -18,15 +18,14 @@ App({
    */
   wxLogin(cb) {
     const self = this
-    wx.login({
-      success(res) {
-        if (res.code) {
-          // 发起网络请求
+    wx.login({  
+      success(res_code) {
+        if (res_code.code) {
           wx.request({
             url: 'https://gjb.demo.chilunyc.com/api/weapp/users/login',
             method: 'POST',
             data: {
-              code: res.code
+              code: res_code.code
             },
             success(res) {
               wx.setStorage({

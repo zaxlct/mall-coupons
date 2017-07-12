@@ -25,7 +25,10 @@ Page({
       key: 'token',
       success(res) {
         self.fetchIsBindPhone(res.data)
-      } 
+      },
+      fail() {
+        app.wxLogin(self.fetchIsBindPhone)
+      }
     })
   },
 
@@ -47,7 +50,8 @@ Page({
           })
         } else if(data.errors) {
           if(data.errors.status == 401) {
-            app.wxLogin(self.fetchData)
+            console.log('users/check', 401)
+            app.wxLogin(self.fetchIsBindPhone)
           }
         }
       },
@@ -136,7 +140,10 @@ Page({
       key: 'token',
       success(res) {
         self.fetchSendMsg(res.data)
-      } 
+      },
+      fail() {
+        app.wxLogin(self.fetchSendMsg)
+      }
     })
   },
 
@@ -164,7 +171,7 @@ Page({
           }
         } else if(data.errors) {
           if(data.errors.status == 401) {
-            app.wxLogin(self.fetchData)
+            app.wxLogin(self.fetchSendMsg)
           }
         }
       },
@@ -199,7 +206,11 @@ Page({
       success(res) {
         self.sendUserInfo(res.data)
         // self.wxPay(res.data)
-      } 
+      },
+      fail() {
+        app.wxLogin(self.sendUserInfo)
+        // app.wxLogin(self.wxPay)
+      }
     })
   },
 
@@ -226,7 +237,8 @@ Page({
           }
         } else if(data.errors) {
           if(data.errors.status == 401) {
-            app.wxLogin(self.fetchData)
+            console.log('weapp/users', 401)
+            app.wxLogin(self.sendUserInfo)
           }
         }
       },
@@ -276,7 +288,8 @@ Page({
           })
         } else if(data.errors) {
           if(data.errors.status == 401) {
-            app.wxLogin(self.fetchData)
+            console.log('weapp/orders', 401)
+            app.wxLogin(self.wxPay)
           }
         }
       },
