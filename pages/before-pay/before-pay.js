@@ -18,6 +18,7 @@ Page({
     const { name = '', price = 0, id='' } = options
     const self = this
     this.setData({
+      id,
       name,
       price: Number(price),
     })
@@ -183,6 +184,19 @@ Page({
 
   submitPay() {
     const self = this
+    if(this.data.isBindPhone) {
+      wx.getStorage({
+        key: 'token',
+        success(res) {
+          self.wxPay(res.data)
+        },
+        fail() {
+          app.wxLogin(self.wxPay)
+        }
+      })
+      return
+    }
+
     if(!this.data.phone) {
       wx.showModal({
         title: '请输入手机号！',
@@ -205,11 +219,9 @@ Page({
       key: 'token',
       success(res) {
         self.sendUserInfo(res.data)
-        // self.wxPay(res.data)
       },
       fail() {
         app.wxLogin(self.sendUserInfo)
-        // app.wxLogin(self.wxPay)
       }
     })
   },
@@ -232,13 +244,37 @@ Page({
         const { data } = res
         console.log(data)
         if(data.data) {
-          if(data.data.status != 1) {
-            console.error('用户信息提交失败！')
+          // 验证码验证成功后再走微信支付的逻辑          
+          if(data.data.status === 1) {
+            self.setData({
+              isBindPhone: true,
+            })
+            wx.getStorage({
+              key: 'token',
+              success(res) {
+                self.wxPay(res.data)
+              },
+              fail() {
+                app.wxLogin(self.wxPay)
+              }
+            })
           }
         } else if(data.errors) {
           if(data.errors.status == 401) {
             console.log('weapp/users', 401)
             app.wxLogin(self.sendUserInfo)
+          } else {
+             wx.showModal({
+              title: data.errors.detail + '!',
+              content: '',
+              showCancel: false,
+            })
+
+            clearInterval(timer)
+            self.setData({
+              isSendMsging: false,
+              timeOut: 60,
+            })
           }
         }
       },
@@ -278,12 +314,19 @@ Page({
             timeStamp: timestamp,
             nonceStr: nonce_str,
             package: pack_age,
-            signType: MD5,
+            signType: 'MD5',
             paySign: pay_sign,
             success(res){
-              console.log(res)
+              wx.redirectTo({
+                url: '/pages/after-pay/after-pay'
+              })
             },
             fail(res){
+               wx.showModal({
+                title: '支付失败，请重试！',
+                content: '',
+                showCancel: false,
+              })
             }
           })
         } else if(data.errors) {
