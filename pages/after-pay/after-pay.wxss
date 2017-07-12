@@ -16,7 +16,7 @@
 }
 
 .cell_bd {
-  flex: 3;
+  flex: 1;
   height: inherit;
   color: #83889a;
 }

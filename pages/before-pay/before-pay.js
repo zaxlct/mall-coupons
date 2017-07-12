@@ -284,6 +284,7 @@ Page({
     })
   },
 
+  // 微信支付
   wxPay(token) {
     const self = this
     wx.request({
@@ -307,7 +308,8 @@ Page({
             nonce_str,
             pack_age,
             sign_type,
-            pay_sign
+            pay_sign,
+            order_time
           } = data.data
 
           wx.requestPayment({
@@ -316,12 +318,13 @@ Page({
             package: pack_age,
             signType: 'MD5',
             paySign: pay_sign,
-            success(res){
+            success(res_pay){
+              console.log(`/pages/after-pay/after-pay?name=${self.data.name}&id=${self.data.id}&num=${self.data.num}&order_time=${order_time}&nonce_str=${nonce_str}`)
               wx.redirectTo({
-                url: '/pages/after-pay/after-pay'
+                url: `/pages/after-pay/after-pay?name=${self.data.name}&id=${self.data.id}&num=${self.data.num}&order_time=${order_time}&nonce_str=${nonce_str}`
               })
             },
-            fail(res){
+            fail(res_pay){
                wx.showModal({
                 title: '支付失败，请重试！',
                 content: '',

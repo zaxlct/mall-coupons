@@ -1,20 +1,34 @@
 Page({
   data:{
-    text:"Page after-pay"
+    name: '',
+    id: '',
+    num: '',
+    order_time: '',
+    nonce_str: '',
   },
   onLoad(options){
-    // 页面初始化 options为页面跳转所带来的参数
+    console.log('after-pay-options', options)
+    const {
+      name,
+      id,
+      num,
+      order_time,
+      nonce_str,
+    } = options
+
+    this.setData({
+      name,
+      id,
+      num,
+      order_time,
+      nonce_str,
+    })
   },
-  onReady(){
-    // 页面渲染完成
+
+  linkDetail() {
+    const self = this
+    wx.navigateTo({
+      url: `/pages/detail/detail?id=${self.data.id}&order_id=${self.data.nonce_str}`
+    })
   },
-  onShow(){
-    // 页面显示
-  },
-  onHide(){
-    // 页面隐藏
-  },
-  onUnload(){
-    // 页面关闭
-  }
 })

@@ -1,22 +1,22 @@
 <view class="container">
   <view class="cell_box">
     <view class="cell_bd">优惠券</view>
-    <view class="cell_ft">将太无二80代100元</view>
+    <view class="cell_ft">{{name}}</view>
   </view>
 
   <view class="cell_box">
     <view class="cell_bd">数量</view>
-    <view class="cell_ft">1</view>
+    <view class="cell_ft">{{num}}</view>
   </view>
 
   <view class="cell_box">
     <view class="cell_bd">购买时间</view>
-    <view class="cell_ft">2017-10-01 10：00</view>
+    <view class="cell_ft">{{order_time}}</view>
   </view>
 
   <view class="cell_box">
     <view class="cell_bd">订单编号</view>
-    <view class="cell_ft">1212131412312121</view>
+    <view class="cell_ft">{{nonce_str}}</view>
   </view>
 
   <view class="tips_box">
@@ -38,7 +38,6 @@
       <text>您只要支付只用用回去抵用之后的剩余金额即可</text>
     </view>
   </view>
-  
 
-  <button class="button">查看优惠券</button>
+  <button class="button" bindtap="linkDetail">查看优惠券</button>
 </view>
