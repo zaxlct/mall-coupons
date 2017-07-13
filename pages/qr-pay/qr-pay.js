@@ -91,10 +91,98 @@ Page({
   },
 
   submitPay() {
-    // TODO consume 不能为空
+    if(!this.data.consume) {
+      wx.showModal({
+        title: '请输入消费金额！',
+        content: '',
+        showCancel: false,
+      })
+      return 
+    }
+    const self = this
+    wx.getStorage({
+      key: 'token',
+      success(res) {
+        self.wxPay(res.data)
+      },
+      fail() {
+        app.wxLogin(self.wxPay)
+      }
+    })
   },
+  
+  wxPay(token) {
+    const ids = this.data.coupons.filter(coupon => coupon.isSeleted).map(coupon => coupon.order_id).join()    
+    const self = this
+    wx.request({
+      url: 'https://gjb.demo.chilunyc.com/api/weapp/consumes',
+      header: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/json'
+      },
+      data: {
+        ids,
+        merchant_id: self.data.id,
+        consume: self.data.consume,
+        pay_sum: self.data.pay_sum,
+      },
+      method: 'POST',
+      success(res) {
+        const { data } = res.data
+        console.log(data)
 
-  onUnload(){
-    // 页面关闭
-  }
+        if(!data.data && data.errors) {
+          if(data.errors.status == 401) {
+            console.log('weapp/orders', 401)
+            app.wxLogin(self.wxPay)
+          }
+          return
+        }
+
+        const payData = data.data
+        if(payData.status === 1) {
+          // 不需要调用支付
+          console.log(`/pages/pay-success/pay-success?consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`)
+          wx.redirectTo({
+            url: `/pages/pay-success/pay-success?consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`
+          })
+        } else if (payData.appid & payData.pay_sign) {
+          // 需要调用微信支付
+          const {
+            appid,
+            timestamp,
+            nonce_str,
+            pack_age,
+            sign_type,
+            pay_sign,
+            order_time
+          } = payData
+
+           wx.requestPayment({
+            timeStamp: timestamp,
+            nonceStr: nonce_str,
+            package: pack_age,
+            signType: 'MD5',
+            paySign: pay_sign,
+            success(res_pay){
+              console.log(`/pages/pay-success/pay-success?nonce_str=${nonce_str}&consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`)
+              wx.redirectTo({
+                url: `/pages/pay-success/pay-success?nonce_str=${nonce_str}&consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`
+              })
+            },
+            fail(res_pay){
+               wx.showModal({
+                title: '支付失败，请重试！',
+                content: '',
+                showCancel: false,
+              })
+            }
+          })  
+        }
+      },
+      fail() {
+        wx.showToast({title: '网络错误，请重试！'})
+      }
+    })  
+  },
 })
