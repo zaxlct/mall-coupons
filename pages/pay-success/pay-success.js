@@ -24,7 +24,7 @@ Page({
 
   linkIndexPage() {
     // TODO 如果这个用户，没用优惠券，直接付款呢？
-    wx.navigateTo({
+    wx.redirectTo({
       url: '/pages/index/index'
     })
   },

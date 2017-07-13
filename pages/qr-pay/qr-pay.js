@@ -62,7 +62,7 @@ Page({
     // TODO 用户改变输入的消费额度时，要判断消费额度是否大于当前已选择的优惠券总额
     const consume = Number(e.detail.value.trim())
     const couponTotal = this.data.coupons.reduce((total,prev) => total + prev.face_value * Number(prev.isSeleted), 0)
-    const pay_sum = consume - couponTotal < 0 ? 0 : consume - couponTotal
+    const pay_sum = Number((consume - couponTotal < 0 ? 0 : consume - couponTotal).toFixed(1))
     this.setData({
       consume,
       pay_sum,
@@ -76,7 +76,7 @@ Page({
       coupons[Number(index)].isSeleted = true
     })
     const couponTotal = coupons.reduce((total,prev) => total + prev.face_value * Number(prev.isSeleted), 0)
-    const pay_sum = this.data.consume - couponTotal < 0 ? 0 : this.data.consume - couponTotal
+    const pay_sum = Number((this.data.consume - couponTotal < 0 ? 0 : this.data.consume - couponTotal).toFixed(1))
 
     //TODO 用户选择的优惠券总额大于 用户输入的消费额度 时，禁止用户再添加优惠券
     // if(couponTotal >= this.data.consume) {
@@ -122,13 +122,13 @@ Page({
       },
       data: {
         ids,
-        merchant_id: self.data.id,
+        merchant_id: self.data.merchant_id,
         consume: self.data.consume,
         pay_sum: self.data.pay_sum,
       },
       method: 'POST',
       success(res) {
-        const { data } = res.data
+        const { data } = res
         console.log(data)
 
         if(!data.data && data.errors) {
@@ -140,13 +140,14 @@ Page({
         }
 
         const payData = data.data
+        console.log(payData)
         if(payData.status === 1) {
           // 不需要调用支付
           console.log(`/pages/pay-success/pay-success?consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`)
           wx.redirectTo({
             url: `/pages/pay-success/pay-success?consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`
           })
-        } else if (payData.appid & payData.pay_sign) {
+        } else if (payData.appid && payData.pay_sign) {
           // 需要调用微信支付
           const {
             appid,

@@ -7,7 +7,7 @@
     <view class="weui-msg__text-area">
       <view class="weui-msg__title">支付成功</view>
       <view class="weui-msg__desc">
-        <text v-if="{{nonce_str}}">{{nonce_str}}</text>
+        <text v-if="{{nonce_str}}">流水号：{{nonce_str}}</text>
         <text>消费总金额：{{consume}}元</text>
         <text>优惠券抵用：{{couponTotal}}元</text>
         <text>实际支付：{{pay_sum}}元</text>
