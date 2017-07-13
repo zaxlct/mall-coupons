@@ -1,10 +1,11 @@
 {
   "pages":[
-    "pages/index/index",
-    "pages/detail/detail",
-    "pages/before-pay/before-pay",
     "pages/qr-pay/qr-pay",    
-    "pages/after-pay/after-pay"
+    "pages/index/index",    
+    "pages/detail/detail",
+    "pages/after-pay/after-pay", 
+    "pages/before-pay/before-pay",
+    "pages/pay-success/pay-success"
   ],
   "window":{
     "backgroundTextStyle":"light",
