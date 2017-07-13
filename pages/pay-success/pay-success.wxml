@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="success" size="93"></icon>
+    </view>
+
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">支付成功</view>
+      <view class="weui-msg__desc">
+        <text v-if="{{nonce_str}}">{{nonce_str}}</text>
+        <text>消费总金额：{{consume}}元</text>
+        <text>优惠券抵用：{{couponTotal}}元</text>
+        <text>实际支付：{{pay_sum}}元</text>
+      </view>
+    </view>
+
+    <view class="weui-btn-area">
+      <button class="weui-btn" bindtap="linkIndexPage" type="primary">确定</button>
+    </view>
+  </view>
+</view>

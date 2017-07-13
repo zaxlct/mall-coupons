@@ -1,0 +1,35 @@
+.weui-msg {
+  padding-top: 36px;
+  text-align: center;
+}
+
+.weui-msg__icon-area {
+  margin-bottom: 30px;
+}
+
+.weui-msg__text-area {
+  margin-bottom: 40px;
+  padding:0 20px;
+}
+
+.weui-msg__title {
+  margin-bottom: 30px;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.weui-msg__desc {
+  font-size: 14px;
+  color: #83889A;
+}
+
+.weui-msg__desc text {
+  display: block;
+  line-height: 24px;  
+}
+
+.weui-btn-area {
+  width: 100%;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
