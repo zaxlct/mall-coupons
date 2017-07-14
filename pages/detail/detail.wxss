@@ -44,7 +44,7 @@
   text-align: center;
 }
 
-.used {
+.used_btn {
   width: 36%;
   height: inherit;
   background: #c4c5ce;

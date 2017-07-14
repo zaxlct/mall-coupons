@@ -12,15 +12,15 @@
       <text>.00</text>
       <text class="gray">（{{item.price}} 元代 {{item.face_value}} 元）</text>
     </view>
-
-    <navigator wx:if="{{item.status == ''}}" class="footer_right" url="../before-pay/before-pay?name={{item.merchant_name}}&price={{item.price}}&id={{item.id}}" open-type="navigateTo">
-      <text>购买</text>
-    </navigator>
-    <view  wx:elif="{{item.status == 0}}" class="footer_right">
+   
+    <view wx:if="{{item.status == 0}}" class="footer_right">
       <text>待消费</text>
     </view>
-    <view  wx:else="{{item.status == 1}}" class="used">
+    <view wx:elif="{{item.status == 1}}" class="used_btn">
       <text>已使用</text>
     </view>
+    <navigator wx:else class="footer_right" url="../before-pay/before-pay?name={{item.merchant_name}}&price={{item.price}}&id={{item.id}}" open-type="navigateTo">
+      <text>购买</text>
+    </navigator>
   </view>
 </view>

@@ -1,10 +1,10 @@
 {
   "pages":[
-    "pages/qr-pay/qr-pay",    
     "pages/index/index",    
     "pages/detail/detail",
     "pages/after-pay/after-pay", 
     "pages/before-pay/before-pay",
+    "pages/qr-pay/qr-pay",    
     "pages/pay-success/pay-success"
   ],
   "window":{
