@@ -1,6 +1,12 @@
 <view class="coupon_detail">
-  <import src="../../common/coupon/index.wxml" />
-  <template is="coupon" data="{{item}}" class="coupon" />
+  <view class="coupon {{item.status ? 'used' : 'bg-white'}}">
+    <image class="img" src="{{item.logo}}" mode="aspectFill"></image>
+    <view class="hd">
+      <text class="name">{{item.merchant_name}}</text>
+      <text class="price">{{item.coupon_name}}</text>
+      <text class="desc">{{item.price}} 元代 {{item.face_value}} 元</text>
+    </view>
+  </view>
 
   <import src="../../common/wxParse/wxParse.wxml"/>
   <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
