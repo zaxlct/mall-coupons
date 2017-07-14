@@ -1,5 +1,28 @@
-<<<<<<< HEAD
-wechat
-=======
 # mall-coupons
->>>>>>> 15c60a6fc9917b37cbce3290f10ba00bbf67d2f3
+给在商场购物的顾客提供的优惠券小程序，用户可以在商场的大屏幕或者其他海报上扫描二维码，打开小程序购买想要的优惠券。
+在对应的商家扫描二维码打开小程序来抵扣消费金额。
+
+## 页面介绍
+### 用户的优惠券列表页↓
+URL: `pages/index/index` 
+![用户的优惠券列表页](https://ws3.sinaimg.cn/large/006tNc79ly1fhjfy8axygj30ki0vg40s.jpg)
+
+### 优惠券详情页↓
+URL: `pages/detail/detail`
+![优惠券详情页](https://ws4.sinaimg.cn/large/006tNc79ly1fhjfzoj6dzj30ku0zqq8e.jpg)
+
+### 购买优惠券页↓
+URL: `pages/before-pay/before-pay`
+![购买优惠券页页](https://ws2.sinaimg.cn/large/006tNc79ly1fhjg22bk0qj30kw0li759.jpg)
+
+### 优惠券支付完成页↓
+URL: `pages/after-pay/after-pay`
+![优惠券支付完成页](https://ws4.sinaimg.cn/large/006tNc79ly1fhjg35gpc1j30ks0rudi4.jpg)
+
+### 扫码商家的二维码，优惠券抵扣消费金额页面↓
+URL: `pages/qr-pay/qr-pay`
+![扫码商家的二维码，优惠券抵扣消费金额页面](https://ws1.sinaimg.cn/large/006tNc79ly1fhjg4dhddxj30ki0xo76j.jpg)
+
+### 消费成功页面↓
+URL: `pages/pay-success/pay-success` 
+![消费成功页面](https://ws4.sinaimg.cn/large/006tNc79ly1fhjg557vnej30ky0nwq46.jpg)
