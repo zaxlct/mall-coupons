@@ -5,7 +5,7 @@
 
 ## token 令牌维护机制
 ![token](https://ws2.sinaimg.cn/large/006tKfTcly1fhu6ep5e9rj317s0padtb.jpg)
-具体代码实现请看 /utlis/token.ks
+具体代码实现请看 `/utlis/token.ks`
 
 ## 页面介绍
 ### 用户的优惠券列表页↓
@@ -36,8 +36,8 @@
 ## 感谢第三方库
 [wxParse](微信小程序富文本解析自定义组件)
 
-## TODO
-- model.js 虽然做到了 views 和 model 的分离，但是当 ajax 发生错误时的判断没有交给 model.js 来处理，而是不恰当的放到 views 里判断了。
-model.js 应该再过滤和判断一下数据，让 views 只需要拿到自己想到数据，不需要做其他的事。
+## TODO
+- model.js 虽然做到了 views 和 model 的分离，但是当 ajax 发生错误时的判断没有交给 model.js 来处理，而是不恰当的放到 views 里判断了。
+model.js 应该再过滤和判断一下数据，让 views 只需要拿到自己想到数据，不需要做其他的事。
 
-- 使用优惠券抵用消费金额时，当总优惠的金额大于消费金额时，应该提示用户
+- 使用优惠券抵用消费金额时，当总优惠的金额大于消费金额时，应该提示用户
