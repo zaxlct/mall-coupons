@@ -30,9 +30,9 @@ export default class Base {
           typeof params.successCb == 'function' && params.successCb(res.data)
         } else if (codeStartChar == '4' && isRefetch) {
           // 如果 token 检测失败，那么还有、仅有一次获取新的 token ，重新请求的机会
-          that._refetch(params)
+          self._refetch(params)
         } else {
-          that._processError(err)
+          self._processError(res.data)
           typeof params.errorCb == 'function' && params.errorCb(res.data)
         }
       },

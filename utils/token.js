@@ -10,8 +10,8 @@ export default class Token {
     const self = this
     wx.getStorage({
       key: 'token',
-      success(token) {
-        self._verifyFromServer(token)
+      success(res) {
+        self._verifyFromServer(res.data)
       },
       fail() {
         self.getTokenFromServer()
