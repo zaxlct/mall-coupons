@@ -31,7 +31,7 @@
       <view class="cell_ft_input_code">
         <input placeholder="请输入验证码" bindinput="bindCode" placeholder-style="color: #c4c5ce" type="number"	/>
       </view>
-      <view wx:if="{{!isSendMsging}}" class="send_code pink" bindtap="sendMsg">发送</view>
+      <view wx:if="{{!isSendMsging}}" class="send_code pink" bindtap="sendSmS">发送</view>
       <view wx:else class="send_code">{{timeOut}} 秒</view>
     </view>
   </view>

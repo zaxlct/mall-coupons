@@ -1,5 +1,6 @@
-const app = getApp()
-let timer = null
+import BeforePayModel from './before-pay-model'
+const beforePayModel = new BeforePayModel()
+let g_timer = null
 
 Page({
   data:{
@@ -16,49 +17,20 @@ Page({
   },
   onLoad(options){
     const { name = '', price = 0, id='' } = options
-    const self = this
     this.setData({
       id,
       name,
       price: Number(price),
     })
-    wx.getStorage({
-      key: 'token',
-      success(res) {
-        self.fetchIsBindPhone(res.data)
-      },
-      fail() {
-        app.wxLogin(self.fetchIsBindPhone)
-      }
-    })
+    
+    this._checkIsBindPhone()
   },
 
-  fetchIsBindPhone(token) {
-    const self = this
-    wx.request({
-      url: 'https://gjb.demo.chilunyc.com/api/weapp/users/check',
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      method: 'POST',
-      success(res) {
-        const { data } = res
-        console.log(data)
-        if(data.data) {
-          self.setData({
-            isBindPhone: Boolean(Number(data.data.status)),
-          })
-        } else if(data.errors) {
-          if(data.errors.status == 401) {
-            console.log('users/check', 401)
-            app.wxLogin(self.fetchIsBindPhone)
-          }
-        }
-      },
-      fail() {
-        wx.showToast({title: '网络错误，请重试！'})
-      },
+  _checkIsBindPhone(token) {
+    beforePayModel.checkIsBindPhone(res => {
+      this.setData({
+        isBindPhone: Boolean(Number(res.data.status))
+      })
     })
   },
 
@@ -88,7 +60,7 @@ Page({
     })
   },
 
-  sendMsg() {
+  sendSmS() {
     if(!this.data.phone) {
       wx.showModal({
         title: '请输入手机号！',
@@ -107,12 +79,12 @@ Page({
       return 
     }
 
-    const self = this
     this.setData({
       isSendMsging: true,
     })
 
     // 获取用户昵称
+    const self = this    
     wx.getUserInfo({
       success(res) {
         self.setData({
@@ -122,9 +94,9 @@ Page({
     })
 
     // 60s 倒计时
-    timer = setInterval(() => {
+    g_timer = setInterval(() => {
       if(this.data.timeOut === 1) {
-        clearInterval(timer)
+        clearInterval(g_timer)
         this.setData({
           isSendMsging: false,
           timeOut: 60,
@@ -136,64 +108,28 @@ Page({
       })
     }, 1000)
 
-    // 调用发送短信
-    wx.getStorage({
-      key: 'token',
-      success(res) {
-        self.fetchSendMsg(res.data)
-      },
-      fail() {
-        app.wxLogin(self.fetchSendMsg)
+    this._serverSendSms()
+  },
+
+  // 发送短信
+  _serverSendSms(token) {
+    const data = {
+      phone: this.data.phone,
+    }
+    beforePayModel.sendSmS(data, res => {
+      if(res.data.status != 1) {
+        wx.showModal({
+          title: '手机号发送失败，请退出重试！',
+          content: '',
+          showCancel: false,
+        })
       }
     })
   },
 
-  // 发送短信
-  fetchSendMsg(token) {
-    const self = this
-    wx.request({
-      url: 'https://gjb.demo.chilunyc.com/api/weapp/sms',
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      data: {phone: self.data.phone},
-      method: 'POST',
-      success(res) {
-        const { data } = res
-        console.log(data)
-        if(data.data) {
-          if(data.data.status != 1) {
-            wx.showModal({
-              title: '手机号发送失败，请退出重试！',
-              content: '',
-              showCancel: false,
-            })
-          }
-        } else if(data.errors) {
-          if(data.errors.status == 401) {
-            app.wxLogin(self.fetchSendMsg)
-          }
-        }
-      },
-      fail() {
-        wx.showToast({title: '网络错误，请重试！'})
-      },
-    })
-  },
-
   submitPay() {
-    const self = this
     if(this.data.isBindPhone) {
-      wx.getStorage({
-        key: 'token',
-        success(res) {
-          self.wxPay(res.data)
-        },
-        fail() {
-          app.wxLogin(self.wxPay)
-        }
-      })
+      this._wxPay()
       return
     }
 
@@ -214,138 +150,92 @@ Page({
       })
       return 
     }
+    this._postUserInfo()
+  },
 
-    wx.getStorage({
-      key: 'token',
-      success(res) {
-        self.sendUserInfo(res.data)
-      },
-      fail() {
-        app.wxLogin(self.sendUserInfo)
+  _postUserInfo() {
+    const data = {
+      nickname: this.data.nickname,
+      phone: this.data.phone,
+      code: this.data.code,
+    }
+
+    beforePayModel.postUserInfo(data, res => {
+      if(res.data) {
+        if(res.data.status === 1) {
+          // 绑定手机号成功，继续微信支付
+          this.setData({
+            isBindPhone: true,
+          })
+          this._wxPay()
+        }  
+      } else if(res.errors){
+        // 验证码错误
+        wx.showModal({
+          title: '验证码错误！',
+          content: '',
+          showCancel: false,
+        })
+
+        clearInterval(g_timer)
+        this.setData({
+          isSendMsging: false,
+          timeOut: 60,
+        })
       }
     })
   },
 
-  sendUserInfo(token) {
+  // 微信支付
+  _wxPay() {
+    const data = {
+      id: this.data.id,
+      num: this.data.num,
+    }
     const self = this
-    wx.request({
-      url: 'https://gjb.demo.chilunyc.com/api/weapp/users',
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      data: {
-        nickname: self.data.nickname,
-        phone: self.data.phone,
-        code: self.data.code,
-      },
-      method: 'POST',
-      success(res) {
-        const { data } = res
-        console.log(data)
-        if(data.data) {
-          // 验证码验证成功后再走微信支付的逻辑          
-          if(data.data.status === 1) {
-            self.setData({
-              isBindPhone: true,
+    beforePayModel.wxPay(data, res => {
+      if(res.data) {
+        const {
+          appid,
+          timestamp,
+          nonce_str,
+          pack_age,
+          sign_type,
+          pay_sign,
+          order_time
+        } = res.data
+
+        wx.requestPayment({
+          timeStamp: timestamp,
+          nonceStr: nonce_str,
+          package: pack_age,
+          signType: 'MD5',
+          paySign: pay_sign,
+          success(res_pay){
+            console.log(`/pages/after-pay/after-pay?name=${self.data.name}&id=${self.data.id}&num=${self.data.num}&order_time=${order_time}&nonce_str=${nonce_str}`)
+            wx.redirectTo({
+              url: `/pages/after-pay/after-pay?name=${self.data.name}&id=${self.data.id}&num=${self.data.num}&order_time=${order_time}&nonce_str=${nonce_str}`
             })
-            wx.getStorage({
-              key: 'token',
-              success(res) {
-                self.wxPay(res.data)
-              },
-              fail() {
-                app.wxLogin(self.wxPay)
-              }
-            })
-          }
-        } else if(data.errors) {
-          if(data.errors.status == 401) {
-            console.log('weapp/users', 401)
-            app.wxLogin(self.sendUserInfo)
-          } else {
-             wx.showModal({
-              title: data.errors.detail + '!',
+          },
+          fail(){
+            wx.showModal({
+              title: '支付失败，请重试！',
               content: '',
               showCancel: false,
             })
-
-            clearInterval(timer)
-            self.setData({
-              isSendMsging: false,
-              timeOut: 60,
-            })
           }
-        }
-      },
-      fail() {
-        wx.showToast({title: '网络错误，请重试！'})
-      },
-    })
-  },
-
-  // 微信支付
-  wxPay(token) {
-    const self = this
-    wx.request({
-      url: 'https://gjb.demo.chilunyc.com/api/weapp/orders',
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      data: {
-        id: self.data.id,
-        num: self.data.num,
-      },
-      method: 'POST',
-      success(res) {
-        const { data } = res
-        console.log(data)
-        if(data.data) {
-          const {
-            appid,
-            timestamp,
-            nonce_str,
-            pack_age,
-            sign_type,
-            pay_sign,
-            order_time
-          } = data.data
-
-          wx.requestPayment({
-            timeStamp: timestamp,
-            nonceStr: nonce_str,
-            package: pack_age,
-            signType: 'MD5',
-            paySign: pay_sign,
-            success(res_pay){
-              console.log(`/pages/after-pay/after-pay?name=${self.data.name}&id=${self.data.id}&num=${self.data.num}&order_time=${order_time}&nonce_str=${nonce_str}`)
-              wx.redirectTo({
-                url: `/pages/after-pay/after-pay?name=${self.data.name}&id=${self.data.id}&num=${self.data.num}&order_time=${order_time}&nonce_str=${nonce_str}`
-              })
-            },
-            fail(res_pay){
-               wx.showModal({
-                title: '支付失败，请重试！',
-                content: '',
-                showCancel: false,
-              })
-            }
-          })
-        } else if(data.errors) {
-          if(data.errors.status == 401) {
-            console.log('weapp/orders', 401)
-            app.wxLogin(self.wxPay)
-          }
-        }
-      },
-      fail() {
-        wx.showToast({title: '网络错误，请重试！'})
-      },
+        })
+      } else if(res.errors) {
+        wx.showModal({
+          title: '支付失败，请重试！',
+          content: '',
+          showCancel: false,
+        })
+      }
     })
   },
 
   onUnload(){
-    if(timer) clearInterval(timer)
+    if(g_timer) clearInterval(g_timer)
   }
 })
