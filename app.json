@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/index/index",    
+    "pages/home/home",
     "pages/detail/detail",
     "pages/after-pay/after-pay", 
     "pages/before-pay/before-pay",
