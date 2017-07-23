@@ -1,4 +1,7 @@
-const WxParse = require('../../common/wxParse/wxParse.js');
+import DetailModel from './detail-model'
+import WxParse from '../../common/wxParse/wxParse'
+const detailModel = new DetailModel()
+
 const app = getApp()
 Page({
   data:{
@@ -9,48 +12,24 @@ Page({
   },
   onLoad(options){
     const { id = '', order_id = '' } = options
-    const self = this
     this.setData({
       id,
       order_id,
     })
     
-    wx.getStorage({
-      key: 'token',
-      success(res) {
-        self.fetchCouponDetail(res.data)
-      },
-      fail() {
-        app.wxLogin(self.fetchCouponDetail)
-      }
-    })
+    this._fetchData()    
   },
-  fetchCouponDetail(token) {
-    const self = this
-    wx.request({
-      url: `https://gjb.demo.chilunyc.com/api/weapp/coupons/${self.data.id}?order_id=${self.data.order_id}`,
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      success(res) {
-        const { data } = res
-        console.log(data)
-        if(data.data) {
-          self.setData({
-            item: data.data,
-            wxParseData: WxParse.wxParse('article', 'html', data.data.details, self)
-          })
-        } else if(data.errors) {
-          if(data.errors.status == 401) {
-            console.log('detail', 401)
-            app.wxLogin(self.fetchCouponDetail)
-          }
-        }
-      },
-      fail() {
-        wx.showToast({title: '网络错误，请重试！'})
-      },
+
+  _fetchData() {
+    const data = {
+      id: this.data.id,
+      order_id: this.data.order_id,
+    }
+    detailModel.getCouponDetailData(data, res => {
+      this.setData({
+        item: res.data,
+        wxParseData: WxParse.wxParse('article', 'html', res.data.details, this)
+      })
     })
   },
 })
