@@ -10,18 +10,10 @@ Page({
   },
 
   _fetchData() {
-    const self = this
-    homeModel.getCouponsData(data => {
+    homeModel.getCouponsData(res => {
       this.setData({
-        coupons: data.data
+        coupons: res.data
       })
-    })
-  },
-
-  //事件处理函数
-  bindViewTap() {
-    wx.navigateTo({
-      url: '../logs/logs'
     })
   },
 })

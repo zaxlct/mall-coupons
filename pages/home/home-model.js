@@ -5,10 +5,10 @@ export default class HomeModel extends Base {
     super()
   }
 
-  getCouponsData(cb) {
+  getCouponsData(successCb) {
     const params = {
       url: 'coupons',
-      successCb: data => typeof cb == 'function' && cb(data)
+      successCb,
     }
     this.request(params)
   }
