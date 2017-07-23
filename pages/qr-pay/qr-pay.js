@@ -1,4 +1,6 @@
-const app = getApp()
+import QrPayModel from './qr-pay-model'
+const qrPayModel = new QrPayModel()
+
 Page({
   data:{
     consume: 0, // 用户输入的消费额度
@@ -10,54 +12,32 @@ Page({
   },
   onLoad(query){
     const { merchant_id = 1 } = query
+
     this.setData({
       merchant_id
     })
-    const self = this
-    wx.getStorage({
-      key: 'token',
-      success(res) {
-        self.fetchData(res.data)
-      },
-      fail() {
-        app.wxLogin(self.fetchData)
+
+    this._getMerchantsInfo(merchant_id)
+  },
+
+  _getMerchantsInfo(merchant_id) {
+    qrPayModel.getMerchantsInfo(merchant_id, res => {
+      if(res.data) {
+        const result = res.data
+        let { coupons = [] } = result
+        // TODO 再 forEach 一个 disabled: false 字段
+        coupons.forEach(item => item.isSeleted = false)
+        this.setData({
+          merchant_info: {
+            logo: result.logo,
+            name: result.name,
+          },
+          coupons,
+        })
       }
     })
   },
-  fetchData(token) {
-    const self = this
-    wx.request({
-      url: 'https://gjb.demo.chilunyc.com/api/weapp/merchants/' + self.data.merchant_id,
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      success(res) {
-        const { data } = res
-        if(data.data) {
-          const result = data.data
-          let { coupons = [] } = result
-          // TODO 再 forEach 一个 disabled: false 字段
-          coupons.forEach(item => item.isSeleted = false)
-          self.setData({
-            merchant_info: {
-              logo: result.logo,
-              name: result.name,
-            },
-            coupons,
-          })
-        } else if(data.errors) {
-          if(data.errors.status == 401) {
-            console.log('merchants', 401)
-            app.wxLogin(self.fetchData)
-          }
-        }
-      },
-      fail() {
-        wx.showToast({title: '网络错误，请重试！'})
-      },
-    })
-  },
+
   bindConsume(e) {
     // TODO 用户改变输入的消费额度时，要判断消费额度是否大于当前已选择的优惠券总额
     const consume = Number(e.detail.value.trim())
@@ -68,6 +48,7 @@ Page({
       pay_sum,
     })
   },
+
   checkboxChange(e) {
     // TODO 防止出现用户多用了优惠券的情况
     let { coupons } = this.data
@@ -99,91 +80,69 @@ Page({
       })
       return 
     }
-    const self = this
-    wx.getStorage({
-      key: 'token',
-      success(res) {
-        self.wxPay(res.data)
-      },
-      fail() {
-        app.wxLogin(self.wxPay)
-      }
-    })
+    
+    this._wxPay()
   },
   
-  wxPay(token) {
+  _wxPay(token) {
     const ids = this.data.coupons.filter(coupon => coupon.isSeleted).map(coupon => coupon.order_id).join()    
-    const self = this
-    wx.request({
-      url: 'https://gjb.demo.chilunyc.com/api/weapp/consumes',
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      data: {
-        ids,
-        merchant_id: self.data.merchant_id,
-        consume: self.data.consume,
-        pay_sum: self.data.pay_sum,
-      },
-      method: 'POST',
-      success(res) {
-        const { data } = res
-        console.log(data)
-
-        if(!data.data && data.errors) {
-          if(data.errors.status == 401) {
-            console.log('weapp/orders', 401)
-            app.wxLogin(self.wxPay)
-          }
-          return
-        }
-
-        const payData = data.data
-        console.log(payData)
-        if(payData.status === 1) {
-          // 不需要调用支付
-          console.log(`/pages/pay-success/pay-success?consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`)
-          wx.redirectTo({
-            url: `/pages/pay-success/pay-success?consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`
-          })
-        } else if (payData.appid && payData.pay_sign) {
-          // 需要调用微信支付
-          const {
-            appid,
-            timestamp,
-            nonce_str,
-            pack_age,
-            sign_type,
-            pay_sign,
-            order_time
-          } = payData
-
-           wx.requestPayment({
-            timeStamp: timestamp,
-            nonceStr: nonce_str,
-            package: pack_age,
-            signType: 'MD5',
-            paySign: pay_sign,
-            success(res_pay){
-              console.log(`/pages/pay-success/pay-success?nonce_str=${nonce_str}&consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`)
-              wx.redirectTo({
-                url: `/pages/pay-success/pay-success?nonce_str=${nonce_str}&consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`
-              })
-            },
-            fail(res_pay){
-               wx.showModal({
-                title: '支付失败，请重试！',
-                content: '',
-                showCancel: false,
-              })
-            }
-          })  
-        }
-      },
-      fail() {
-        wx.showToast({title: '网络错误，请重试！'})
+    const data = {
+      ids,
+      merchant_id: this.data.merchant_id,
+      consume: this.data.consume,
+      pay_sum: this.data.pay_sum,
+    }
+    qrPayModel.wxPay(data, res => {
+      if(!res.data) {
+         wx.showModal({
+          title: '支付失败，请退出重试！',
+          content: '',
+          showCancel: false,
+        })
+        return
       }
-    })  
+      const payData = res.data
+      console.log(payData)
+      if(payData.status === 1) {
+        // 不需要调用支付
+        console.log(`/pages/pay-success/pay-success?consume=${this.data.consume}&couponTotal=${this.data.couponTotal}&pay_sum=${this.data.pay_sum}`)
+        wx.redirectTo({
+          url: `/pages/pay-success/pay-success?consume=${this.data.consume}&couponTotal=${this.data.couponTotal}&pay_sum=${this.data.pay_sum}`
+        })
+      } else if (payData.appid && payData.pay_sign) {
+        // 需要调用微信支付
+        const {
+          appid,
+          timestamp,
+          nonce_str,
+          pack_age,
+          sign_type,
+          pay_sign,
+          order_time
+        } = payData
+
+        const self = this
+        wx.requestPayment({
+          timeStamp: timestamp,
+          nonceStr: nonce_str,
+          package: pack_age,
+          signType: 'MD5',
+          paySign: pay_sign,
+          success(res_pay){
+            console.log(`/pages/pay-success/pay-success?nonce_str=${nonce_str}&consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`)
+            wx.redirectTo({
+              url: `/pages/pay-success/pay-success?nonce_str=${nonce_str}&consume=${self.data.consume}&couponTotal=${self.data.couponTotal}&pay_sum=${self.data.pay_sum}`
+            })
+          },
+          fail(res_pay){
+            wx.showModal({
+              title: '支付失败，请重试！',
+              content: '',
+              showCancel: false,
+            })
+          }
+        })
+      }  
+    })
   },
 })
