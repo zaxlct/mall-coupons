@@ -4,8 +4,7 @@
 - 在支持优惠券的商家扫描二维码，打开小程序使用优惠券抵扣消费金额
 
 ## token 令牌维护机制
-![token]{https://ws4.sinaimg.cn/large/006tKfTcly1fhu6t6f6gvj317s0padtb.jpg)
-![token](https://ws2.sinaimg.cn/large/006tKfTcly1fhu6ep5e9rj317s0padtb.jpg)
+![token](https://ws1.sinaimg.cn/large/006tNc79ly1fhuqb7porej317s0pan1d.jpg)
 具体代码实现请看 `/utlis/token.ks`
 
 ## 页面介绍
