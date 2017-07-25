@@ -1,5 +1,5 @@
 # mall-coupons
-- 给在商场购物的顾客提供的优惠券小程序
+- 为商场购物的顾客以及商家提供的优惠券小程序
 - 用户可以在商场的大屏幕或者其他海报上扫描二维码，打开小程序购买对应的优惠券
 - 在支持优惠券的商家扫描二维码，打开小程序使用优惠券抵扣消费金额
 
@@ -9,7 +9,7 @@
 
 ## 页面介绍
 ### 用户的优惠券列表页↓
-- URL: `pages/index/index` 
+- URL: `pages/home/home` 
 - <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fhjfy8axygj30ki0vg40s.jpg" width="450" />
 
 ### 优惠券详情页↓
