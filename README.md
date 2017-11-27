@@ -5,7 +5,7 @@
 
 ## token 令牌维护机制
 ![token](https://ws1.sinaimg.cn/large/006tNc79ly1fhuqb7porej317s0pan1d.jpg)
-具体代码实现请看 `/utlis/token.ks`
+具体代码实现请看 `/utlis/token.js`
 
 ## 页面介绍
 ### 用户的优惠券列表页↓
